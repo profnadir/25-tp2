@@ -46,8 +46,102 @@ class Stagiaire {
 
 }
 
+class Formation{
+
+    private $intitule; // "PHP"
+    private $nbJours; // 5
+    private $stagiaires; // []
+
+    public function __construct($intitule,$nbJours,$stagiaires)
+    {
+        $this->intitule = $intitule;
+        $this->nbJours = $nbJours;
+        $this->stagiaires = $stagiaires;
+    }
+
+    public function getIntitule() {
+        return $this->intitule;
+    }
+
+    public function setIntitule($intitule){
+        $this->intitule = $intitule;
+    }
+
+    public function getNbJours() {
+        return $this->nbJours;
+    }
+
+    public function setNbJours($nbJours){
+        $this->nbJours = $nbJours;
+    }
+
+    public function getStagiaires() {
+        return $this->stagiaires;
+    }
+
+    public function setStagiaires($stagiaires){
+        $this->stagiaires = $stagiaires;
+    }
+
+    public function calculerMoyenneFormation(){
+        $somme = 0;
+        for ($i=0; $i < count($this->stagiaires); $i++) { 
+            $somme += $this->stagiaires[$i]->calculerMoyenne();
+        }
+        return $somme/count($this->stagiaires);
+    }
+
+    public function getIndexMax(){
+        $index = 0;
+        $max = $this->stagiaires[0]->calculerMoyenne();
+
+        for ($i=1; $i < count($this->stagiaires); $i++) { 
+            if($this->stagiaires[$i]->calculerMoyenne() > $max){
+                $index = $i;
+                $max = $this->stagiaires[$i]->calculerMoyenne();
+            }
+        }
+
+        return $index;
+    }
+
+    public function afficherNomMax(){
+
+        $this->stagiaires[$this->getIndexMax()]->getNom();
+
+    }
+
+}
+
+$s1 = new Stagiaire("John", [12,13,14]); // 13 //0
+echo "<br/>";
+echo "La moyenne du stagiaire 1 est : " . $s1->calculerMoyenne();
+echo "<br/>";
+$s2 = new Stagiaire("Jane", [15,16,14]); // 15 //1
+echo "<br/>";
+echo "La moyenne du stagiaire 2 est : " . $s2->calculerMoyenne();
+echo "<br/>";
+$s3 = new Stagiaire("James", [17,13,18]); // 16 //2
+echo "<br/>";
+echo "La moyenne du stagiaire 3 est : " . $s3->calculerMoyenne();
+echo "<br/>";
+
+
+
+$php = new Formation("PHP",5,[$s1,$s2,$s3]);
+echo "<br/>";
+echo "<br/>";
+
+echo "La moyenne de la formation est : " . $php->calculerMoyenneFormation(); // 14.66666 
+
+echo "<br/>";
+
+echo "L'indice de la meuilleure moyenne de la formation est : " . $php->getIndexMax();
+
 $fadil = new Stagiaire("Fadil",[18,20,19]);
 
+echo "<br/>";
+echo "<br/>";
 
 echo $fadil->getNom();
 echo "<br/>";
